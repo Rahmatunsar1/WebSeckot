@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat WebSocket Sederhana</title>
+</head>
+<body>
+  <h1>Chat dengan WebSocket</h1>
+  <input id="input" type="text" placeholder="Ketik pesan..."/>
+  <button onclick="sendMessage()">Kirim</button>
+  <ul id="messages"></ul>
+
+  <script>
+    const ws = new WebSocket('ws://localhost:8080');
+
+    ws.onmessage = (event) => {
+      const messages = document.getElementById('messages');
+      const li = document.createElement('li');
+      li.textContent = event.data;
+      messages.appendChild(li);
+    };
+
+    function sendMessage() {
+      const input = document.getElementById('input');
+      ws.send(input.value);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
